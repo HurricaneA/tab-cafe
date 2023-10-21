@@ -81,11 +81,17 @@ export default function OrdersList() {
                   placed {`${moment(orderList.createdAt.toString()).fromNow()}`}
                 </h6>
                 <ol key={index} type="1">
-                  {orderList.orders.map((order, indexTwo) => (
-                    <li key={indexTwo}>
-                      {order.name} X {order.quantity}
-                    </li>
-                  ))}
+                  {orderList.orders.map((order, indexTwo) =>
+                    order.name.toLowerCase().includes("juice") ? (
+                      <li key={indexTwo} style={{ color: "red" }}>
+                        {order.name} X {order.quantity}
+                      </li>
+                    ) : (
+                      <li key={indexTwo}>
+                        {order.name} X {order.quantity}
+                      </li>
+                    )
+                  )}
                 </ol>
               </div>
               <div style={{ textAlign: "center" }}>
