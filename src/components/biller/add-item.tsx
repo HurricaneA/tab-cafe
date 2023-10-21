@@ -40,13 +40,23 @@ export default function AddItem() {
               <b>New Item</b>
             </Form.Label>
             <Col sm="8">
-              <Form.Control type="text" required name="itemName" />
-              <Form.Select required name="itemType">
+              <Form.Control
+                placeholder="Name"
+                type="text"
+                required
+                name="itemName"
+              />
+              <Form.Select placeholder="type" required name="itemType">
                 <option value="snacks">Snacks</option>
                 <option value="specials">Special</option>
                 <option value="beverages">Beverages</option>
               </Form.Select>
-              <Form.Control type="number" required name="itemPrice" />
+              <Form.Control
+                placeholder="price"
+                type="number"
+                required
+                name="itemPrice"
+              />
               <br />
               <Button variant="primary" type="submit">
                 Add to list

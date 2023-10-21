@@ -83,8 +83,8 @@ export default function BillerItems() {
           <div className="col-8">
             <Form.Control
               type="number"
+              min={1}
               id="inputquantity"
-              defaultValue={item.quantity}
               onChange={(e) => handleChange(item.id, e)}
             />
           </div>
@@ -102,8 +102,8 @@ export default function BillerItems() {
           <div className="col-8">
             <Form.Control
               type="number"
+              min={1}
               id="inputquantity"
-              defaultValue={item.quantity}
               onChange={(e) => handleChange(item.id, e)}
             />
           </div>
@@ -121,8 +121,8 @@ export default function BillerItems() {
           <div className="col-8">
             <Form.Control
               type="number"
+              min={1}
               id="inputquantity"
-              defaultValue={item.quantity}
               onChange={(e) => handleChange(item.id, e)}
             />
           </div>
