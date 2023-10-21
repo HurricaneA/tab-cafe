@@ -1,12 +1,12 @@
-FROM node:18-alpine
+FROM node:16
 
 WORKDIR /react-vite-app
 
-EXPOSE 3000
+EXPOSE 8080
 
 COPY package.json package-lock.json ./
 
-RUN npm install --silent
+RUN npm install
 
 COPY . ./
 
