@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { ItemsInterface } from "../../interfaces";
+import { ItemsInterface, OrdersInterface } from "../../interfaces";
 
 export default function BillerItems() {
   const baseURL = "https://p01--nestjs--dxhvkdzpb8bz.code.run";
+  // const baseURL = "http://localhost:3000";
 
   useEffect(() => {
     axios.get(`${baseURL}/items`).then((response) => {
@@ -21,12 +22,11 @@ export default function BillerItems() {
   const [snacks, setSnacks] = useState<ItemsInterface[]>([]);
   const [specials, setSpecials] = useState<ItemsInterface[]>([]);
   const [beverages, setBeverages] = useState<ItemsInterface[]>([]);
-  const [showOrder, setShowOrder] = useState(false);
+  const [showOrder, setShowOrder] = useState(true);
   const [total, setTotal] = useState(0);
-  const [order, setOrder] = useState<string[]>([]);
+  const [order, setOrder] = useState<OrdersInterface[]>([]);
 
   useEffect(() => {
-    console.log(items);
     const handleTotal = () => {
       const sum = items.reduce(
         (result, { price, quantity }) => (result += price * quantity),
@@ -43,7 +43,15 @@ export default function BillerItems() {
 
     const orderItems = items.filter((item) => item.quantity > 0);
 
-    setOrder(orderItems.map((fl) => `${fl.quantity} X ${fl.name}`));
+    setOrder(
+      orderItems.map((fl) => ({
+        description: `${fl.quantity} X ${fl.name} = ${fl.quantity} X ${fl.price} ----> `,
+        quantity: fl.quantity,
+        name: fl.name,
+        unitPrice: fl.price,
+        total: fl.price * fl.quantity,
+      }))
+    );
 
     return () => {
       handleTotal();
@@ -66,8 +74,31 @@ export default function BillerItems() {
     }
   };
 
-  const placeOrder = (orders: string[]) => {
-    console.log(orders);
+  const resetOrder = () => {
+    setItems(items.map((item) => ({ ...item, quantity: 0 })));
+  };
+
+  const placeOrder = (orders: OrdersInterface[]) => {
+    if (orders.length !== 0) {
+      const data = {
+        items: orders.map((item) => ({
+          name: item.name,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice,
+        })),
+      };
+
+      axios
+        .post(`${baseURL}/orders`, data)
+        .then((result) => {
+          if (result.status === 200) {
+            alert("Order placed!");
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
   };
 
   return (
@@ -84,6 +115,7 @@ export default function BillerItems() {
             <Form.Control
               type="number"
               min={1}
+              value={item.quantity}
               id="inputquantity"
               onChange={(e) => handleChange(item.id, e)}
             />
@@ -103,6 +135,7 @@ export default function BillerItems() {
             <Form.Control
               type="number"
               min={1}
+              value={item.quantity}
               id="inputquantity"
               onChange={(e) => handleChange(item.id, e)}
             />
@@ -122,6 +155,7 @@ export default function BillerItems() {
             <Form.Control
               type="number"
               min={1}
+              value={item.quantity}
               id="inputquantity"
               onChange={(e) => handleChange(item.id, e)}
             />
@@ -129,10 +163,36 @@ export default function BillerItems() {
         </div>
       ))}
 
-      <h3>
-        {showOrder && order.map((item, index) => <p key={index}>{item}</p>)}
-        <b>Price : {total}</b>
-      </h3>
+      {showOrder && (
+        <>
+          <h4>Your Order</h4>
+          {order.map((item, index) => (
+            <div
+              key={index}
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <p key={index}>{item.description}</p>
+              <h5>{item.total}LKR</h5>
+            </div>
+          ))}
+        </>
+      )}
+
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Button
+          type="button"
+          variant="secondary"
+          disabled={total === 0}
+          onClick={resetOrder}
+        >
+          Clear Order
+        </Button>
+        <h5>
+          <b>Price : {total}LKR</b>
+        </h5>
+      </div>
+
+      <br />
 
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Button variant="success" onClick={() => placeOrder(order)}>

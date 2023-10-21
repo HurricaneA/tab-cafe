@@ -1,29 +1,25 @@
 import "./App.css";
 import Layout from "./components/layout";
-import BillerItems from "./components/biller/biller-items";
 import { QueryClient, QueryClientProvider } from "react-query";
-import AddItem from "./components/biller/add-item";
-import { Button } from "react-bootstrap";
-import { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/home";
+import Orders from "./pages/orders";
+import Items from "./pages/items";
 
 const queryClient = new QueryClient();
 
 function App() {
-  const [showMenu, setShowMenu] = useState(false);
-
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <Layout>
-          <br></br>
-          <Button
-            onClick={() => setShowMenu((prevState) => !prevState)}
-            style={{ textAlign: "end" }}
-          >
-            Menu
-          </Button>
-          {showMenu && <AddItem />}
-          <BillerItems />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/items" element={<Items />} />
+            </Routes>
+          </BrowserRouter>
         </Layout>
       </QueryClientProvider>
     </>
