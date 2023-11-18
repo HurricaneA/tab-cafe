@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from "@react-pdf/renderer";
 
-const borderColor = "#90e5fc";
+const borderColor = "#fc9097";
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    borderBottomColor: "#bff0fd",
-    backgroundColor: "#bff0fd",
+    borderBottomColor: "#eb6767",
+    backgroundColor: "#eb6767",
     borderBottomWidth: 1,
     alignItems: "center",
     height: 24,
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
 export const InvoiceTableHeader = () => (
   <View style={styles.container}>
     <Text style={styles.description}>Item Description</Text>
-    <Text style={styles.qty}>Qty</Text>
-    <Text style={styles.rate}>@</Text>
+    <Text style={styles.qty}>Quantity</Text>
+    <Text style={styles.rate}>Unit Price</Text>
     <Text style={styles.amount}>Amount</Text>
   </View>
 );

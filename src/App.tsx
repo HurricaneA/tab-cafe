@@ -1,13 +1,12 @@
-import "./App.css";
-import Layout from "./components/layout";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Layout from "./components/layout";
+import { NavigationBar } from "./components/navbar/NavigationBar";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
-import OrdersList from "./components/orders/orders-list";
-import { NavigationBar } from "./components/navbar/NavigationBar";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import { Template } from "./components/pdf/template";
+import Orders from "./pages/Orders";
+import { Stats } from "./pages/Stats";
 
 const queryClient = new QueryClient();
 
@@ -20,8 +19,9 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/orders" element={<OrdersList />} />
+              <Route path="/orders" element={<Orders />} />
               <Route path="/items" element={<Items />} />
+              <Route path="/stats" element={<Stats />} />
             </Routes>{" "}
           </Layout>
         </BrowserRouter>

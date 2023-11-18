@@ -17,6 +17,9 @@ export const NavigationBar = () => {
             <LinkContainer to={"/orders"}>
               <Nav.Link>Orders</Nav.Link>
             </LinkContainer>
+            <LinkContainer to={"/stats"}>
+              <Nav.Link>Stats</Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Container>

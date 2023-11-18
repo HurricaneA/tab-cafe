@@ -6,8 +6,15 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   reportTitle: {
-    fontSize: 12,
+    fontSize: 10,
     textAlign: "center",
+    marginTop: 30,
+    fontWeight: "light",
+  },
+  reportTitleFooter: {
+    fontSize: 8,
+    textAlign: "center",
+    fontWeight: "extralight",
   },
 });
 
@@ -19,7 +26,7 @@ Font.registerEmojiSource({
 export const InvoiceThankYouMsg = () => (
   <View style={styles.titleContainer}>
     <Text style={styles.reportTitle}>
-      Thank you for helping another child 😀
+      Your Contribution will surely help a child ❤️
     </Text>
   </View>
 );

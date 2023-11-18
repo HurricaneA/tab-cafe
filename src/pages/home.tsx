@@ -3,25 +3,17 @@ import { useMutation, useQuery } from "react-query";
 import { getItems, placeOrder } from "../api";
 import BillerItems from "../components/biller/BillerItems";
 import { ItemsInterface } from "../interfaces";
+import { useItems } from "../api/queries";
 
 export default function Home() {
   const [fetchedData, setFetchData] = useState<ItemsInterface[]>([]);
 
-  const {
-    data: itemsData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["itemsData"],
-    queryFn: () => getItems(),
-  });
-
+  const { data: itemsData, isLoading, error } = useItems();
   const { mutateAsync: placeOrderMutation } = useMutation({
     mutationFn: placeOrder,
   });
 
   useEffect(() => {
-    console.log("Running now");
     setFetchData(itemsData ?? []);
   }, [itemsData]);
 

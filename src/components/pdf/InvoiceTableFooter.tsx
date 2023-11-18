@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from "@react-pdf/renderer";
 import { Order } from "../../interfaces";
 
-const borderColor = "#90e5fc";
+const borderColor = "#fc9097";
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    borderBottomColor: "#bff0fd",
+    borderBottomColor: "#eb6767",
     borderBottomWidth: 1,
     alignItems: "center",
     height: 24,

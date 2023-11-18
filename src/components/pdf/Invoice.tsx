@@ -1,6 +1,5 @@
 import { Document, Page, StyleSheet } from "@react-pdf/renderer";
 import { InvoiceInterface } from "../../interfaces";
-import { BillTo } from "./BillTo";
 import { InvoiceItemsTable } from "./InvoiceItemsTable";
 import { InvoiceNo } from "./InvoiceNo";
 import { InvoiceThankYouMsg } from "./InvoiceThankYouMsg";
@@ -28,9 +27,8 @@ export const Invoice = ({ invoice }: { invoice: InvoiceInterface }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       {/* <Image style={styles.logo} src={logo} /> */}
-      <InvoiceTitle title="Invoice" />
+      <InvoiceTitle title="Tab Café- Invoice" />
       <InvoiceNo invoice={invoice} />
-      <BillTo invoice={invoice} />
       <InvoiceItemsTable invoice={invoice} />
       <InvoiceThankYouMsg />
     </Page>

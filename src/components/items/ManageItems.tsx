@@ -1,35 +1,26 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { ItemsInterface } from "../../interfaces";
-import { baseUrl } from "../../util/constants";
 
 export default function ManageItems({
+  items,
   handleShow,
   setItemToUpdate,
 }: {
+  items: ItemsInterface[] | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleShow: () => void;
   setItemToUpdate: React.Dispatch<
     React.SetStateAction<ItemsInterface | undefined>
   >;
 }) {
-  const [items, setItems] = useState<ItemsInterface[]>([]);
-
-  useEffect(() => {
-    axios.get(`${baseUrl}/items`).then((response) => {
-      const items: ItemsInterface[] = response.data;
-      const allItems = items.map((item) => ({ ...item }));
-      setItems(allItems);
-    });
-  }, []);
+  console.log("Items ", items);
 
   return (
     <Row>
       <Col>
         <h3>Manage All Items</h3>
         <ol type="1" key={"list"}>
-          {items.map((item) => (
+          {items?.map((item) => (
             <div key={item.id} style={{ paddingBottom: "10px" }}>
               <li>{item.name}</li>
               <Button

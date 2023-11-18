@@ -5,3 +5,18 @@
     margin-right: 100px
 }
 
+.link-space{
+    display: flex;
+    justify-content: space-around;
+}
+
+.orders-list-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.order-list-total{
+    justify-content: flex-end;
+    display: flex;
+}

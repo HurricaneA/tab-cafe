@@ -2,11 +2,11 @@ import { StyleSheet, Text, View } from "@react-pdf/renderer";
 import { Fragment } from "react";
 import { Order } from "../../interfaces";
 
-const borderColor = "#90e5fc";
+const borderColor = "#fc9097";
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    borderBottomColor: "#bff0fd",
+    borderBottomColor: "#eb6767",
     borderBottomWidth: 1,
     alignItems: "center",
     height: 24,
@@ -45,7 +45,7 @@ export const InvoiceTableRow = ({ items }: { items: Order[] }) => {
     <View style={styles.row} key={index}>
       <Text style={styles.description}>{item.name}</Text>
       <Text style={styles.qty}>{item.quantity}</Text>
-      <Text style={styles.rate}>{item.unitPrice}</Text>
+      <Text style={styles.rate}>{item.unitPrice} LKR</Text>
       <Text style={styles.amount}>
         {(item.quantity * item.unitPrice).toFixed(2)}
       </Text>

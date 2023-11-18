@@ -31,12 +31,14 @@ export interface GetOrdersInterface {
   receiptLink?: string;
   createdAt: Date;
   updatedAt: Date;
+  total: number;
 }
 
 export interface Order {
   name: string;
   quantity: number;
   unitPrice: number;
+  subTotal: number;
 }
 
 export interface InvoiceInterface {
@@ -47,4 +49,8 @@ export interface InvoiceInterface {
   address: string;
   items: Order[];
   transDate: string;
+}
+
+export interface GetUploadedPDFInterface {
+  downloadLink: string;
 }
