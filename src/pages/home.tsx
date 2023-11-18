@@ -5,7 +5,7 @@ import BillerItems from "../components/biller/BillerItems";
 import { ItemsInterface } from "../interfaces";
 import { useItems } from "../api/queries";
 
-export default function Home() {
+export const Home = () => {
   const [fetchedData, setFetchData] = useState<ItemsInterface[]>([]);
 
   const { data: itemsData, isLoading, error } = useItems();
@@ -29,4 +29,4 @@ export default function Home() {
       />
     </div>
   );
-}
+};

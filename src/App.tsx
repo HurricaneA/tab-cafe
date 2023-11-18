@@ -3,14 +3,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/layout";
 import { NavigationBar } from "./components/navbar/NavigationBar";
-import Home from "./pages/Home";
-import Items from "./pages/Items";
-import Orders from "./pages/Orders";
 import { Stats } from "./pages/Stats";
+import { Home } from "@mui/icons-material";
+import { Items } from "./pages/Items";
+import { Orders } from "./pages/Orders";
 
 const queryClient = new QueryClient();
 
-function App() {
+export const App = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -28,6 +28,4 @@ function App() {
       </QueryClientProvider>
     </>
   );
-}
-
-export default App;
+};

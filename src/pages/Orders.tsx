@@ -10,7 +10,7 @@ import { useOrders } from "../api/queries";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import { Loader } from "../components/common/Loader";
-export default function Orders() {
+export const Orders = () => {
   const [ordersList, setOrdersList] = useState<GetOrdersInterface[]>([]);
   const [loader, setLoader] = useState(false);
 
@@ -157,4 +157,4 @@ export default function Orders() {
       </Col>
     </Row>
   );
-}
+};

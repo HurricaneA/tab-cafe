@@ -4,7 +4,7 @@ import ManageItems from "../components/items/ManageItems";
 import { ItemsInterface } from "../interfaces";
 import { useItems } from "../api/queries";
 
-export default function Items() {
+export const Items = () => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const [itemToUpdate, setItemToUpdate] = useState<ItemsInterface>();
@@ -31,4 +31,4 @@ export default function Items() {
       />
     </div>
   );
-}
+};
