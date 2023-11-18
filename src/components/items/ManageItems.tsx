@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { ItemsInterface } from "../../interfaces";
+import { baseUrl } from "../../util/constants";
 
 export default function ManageItems({
   handleShow,
@@ -9,15 +10,14 @@ export default function ManageItems({
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleShow: () => void;
-  setItemToUpdate: React.Dispatch<React.SetStateAction<ItemsInterface>>;
+  setItemToUpdate: React.Dispatch<
+    React.SetStateAction<ItemsInterface | undefined>
+  >;
 }) {
-  const baseURL = "https://p01--nestjs--dxhvkdzpb8bz.code.run";
-  //   const baseURL = "http://localhost:3000";
-
   const [items, setItems] = useState<ItemsInterface[]>([]);
 
   useEffect(() => {
-    axios.get(`${baseURL}/items`).then((response) => {
+    axios.get(`${baseUrl}/items`).then((response) => {
       const items: ItemsInterface[] = response.data;
       const allItems = items.map((item) => ({ ...item }));
       setItems(allItems);
@@ -39,7 +39,7 @@ export default function ManageItems({
                 }}
                 type="button"
               >
-                Manange
+                Manage
               </Button>
             </div>
           ))}

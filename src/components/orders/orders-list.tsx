@@ -1,75 +1,81 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { GetOrdersInterface } from "../../interfaces";
+import { GetOrdersInterface, InvoiceInterface } from "../../interfaces";
 import moment from "moment";
+import { baseUrl } from "../../util/constants";
+import { getOrders } from "../../api";
+import { useQuery } from "react-query";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { Template } from "../pdf/template";
+import { Invoice } from "../pdf/Invoice";
 
 export default function OrdersList() {
-  const baseURL = "https://p01--nestjs--dxhvkdzpb8bz.code.run";
-  // type Views = "all" | "pending" | "completed";
-  // const baseURL = "http://localhost:3000";
-  // const [defaultOrdersList, setDefaultOrdersList] = useState<
-  //   GetOrdersInterface[]
-  // >([]);
   const [ordersList, setOrdersList] = useState<GetOrdersInterface[]>([]);
-  // const [view, setView] = useState<Views>("all");
+
+  const [pdfData, setPdfData] = useState<InvoiceInterface>();
+
+  const generatePDF = (orderList: GetOrdersInterface) => {
+    const balance = orderList.orders
+      .map((item) => Number(item.quantity) * item.unitPrice)
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+    const invoice: InvoiceInterface = {
+      address: "Colombo Gospel Tabernacle",
+      balance: balance.toString(),
+      id: orderList.randomId,
+      invoice_no: orderList.randomId,
+      company: "Tab Cafe",
+      items: orderList.orders,
+      transDate: new Date().toLocaleDateString(),
+    };
+
+    setPdfData(invoice);
+  };
+
+  const {
+    data: ordersData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["ordersData"],
+    queryFn: () => getOrders(),
+  });
 
   useEffect(() => {
-    axios.get(`${baseURL}/orders`).then((response) => {
-      const fetchedOrders: GetOrdersInterface[] = response.data;
-      // setDefaultOrdersList(fetchedOrders);
-      setOrdersList(fetchedOrders.filter((item) => !item.isCompleted));
-    });
-  }, []);
+    setOrdersList(ordersData ?? []);
+  }, [ordersData]);
 
-  // const handleViewChange = (view: Views) => {
-  //   if (view === "all") {
-  //     setOrdersList(defaultOrdersList);
-  //   } else if (view === "pending") {
-  //     setOrdersList(defaultOrdersList.filter((item) => !item.isCompleted));
-  //   } else {
-  //     setOrdersList(defaultOrdersList.filter((item) => item.isCompleted));
-  //   }
+  if (isLoading) return <div>Loading...</div>;
 
-  //   setView(view);
+  if (error) return "An error has occurred: " + (error as any)?.message;
+
+  // const updateCompleteStatus = (id: number) => {
+  //   axios
+  //     .patch(`${baseUrl}/orders/${id}`)
+  //     .then((result) => {
+  //       if (result.status !== 201) {
+  //         alert("Cannot change status");
+  //       } else {
+  //         setOrdersList((prevItems) =>
+  //           prevItems.map((prevItem) =>
+  //             prevItem.id === id
+  //               ? { ...prevItem, isCompleted: !prevItem.isCompleted }
+  //               : prevItem
+  //           )
+  //         );
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       alert(err);
+  //     });
   // };
-
-  const updateCompleteStatus = (id: number) => {
-    axios
-      .patch(`${baseURL}/orders/${id}`)
-      .then((result) => {
-        if (result.status !== 201) {
-          alert("Cannot change status");
-        } else {
-          setOrdersList((prevItems) =>
-            prevItems.map((prevItem) =>
-              prevItem.id === id
-                ? { ...prevItem, isCompleted: !prevItem.isCompleted }
-                : prevItem
-            )
-          );
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  };
 
   return (
     <Row>
       <Col>
         <div>
-          <h2>Pending Orders</h2>
-          <br />
-          {/* <Form.Select
-            placeholder="type"
-            name="filterby"
-            onChange={(e) => handleViewChange(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="completed">Completed</option>
-          </Form.Select> */}
+          <h2>Total Orders</h2>
           <br />
         </div>
         {ordersList.map((orderList, index) => (
@@ -95,12 +101,29 @@ export default function OrdersList() {
                 </ol>
               </div>
               <div style={{ textAlign: "center" }}>
-                <Button
+                {/* <Button
                   variant={orderList.isCompleted ? "success" : "warning"}
                   onClick={() => updateCompleteStatus(orderList.id)}
                 >
                   {orderList.isCompleted ? "Marked as Competed" : "Pending"}
+                </Button> */}
+                <Button
+                  onClick={() => generatePDF(orderList)}
+                  variant={"warning"}
+                >
+                  Generate PDF
                 </Button>
+
+                {pdfData && (
+                  <PDFDownloadLink
+                    document={<Invoice invoice={pdfData} />}
+                    fileName="somename.pdf"
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? "Loading document..." : "Download now!"
+                    }
+                  </PDFDownloadLink>
+                )}
               </div>
             </div>
             <br />

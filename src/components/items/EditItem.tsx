@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { ItemType, ItemsInterface } from "../../interfaces";
 import axios from "axios";
+import { baseUrl } from "../../util/constants";
 
 export default function EditItem({
   show,
@@ -13,9 +14,6 @@ export default function EditItem({
   setShow: React.Dispatch<React.SetStateAction<any>>;
   itemToUpdate: ItemsInterface | undefined;
 }) {
-  const baseURL = "https://p01--nestjs--dxhvkdzpb8bz.code.run";
-  //   const baseURL = "http://localhost:3000";
-
   const [fields, setFields] = useState<{
     id: number;
     name: string;
@@ -60,7 +58,7 @@ export default function EditItem({
 
     if (fields?.id) {
       axios
-        .patch(`${baseURL}/items/${fields.id}`, {
+        .patch(`${baseUrl}/items/${fields.id}`, {
           name: fields.name,
           price: Number(fields.price),
           type: fields.type,

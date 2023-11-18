@@ -1,13 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { baseUrl } from "../../util/constants";
 
 export default function AddItem() {
-  const baseURL = "https://p01--nestjs--dxhvkdzpb8bz.code.run";
-
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     const form = event.currentTarget;
     event.preventDefault();
 
@@ -17,7 +16,7 @@ export default function AddItem() {
       const itemPrice = event.target.itemPrice.value;
 
       axios
-        .post(`${baseURL}/items`, {
+        .post(`${baseUrl}/items`, {
           name: itemName,
           type: itemType,
           price: Number(itemPrice),

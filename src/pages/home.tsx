@@ -1,45 +1,40 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import AddItem from "../components/biller/add-item";
-import BillerItems from "../components/biller/biller-items";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
+import { getItems, placeOrder } from "../api";
+import BillerItems from "../components/biller/BillerItems";
+import { ItemsInterface } from "../interfaces";
 
 export default function Home() {
-  const [showMenu, setShowMenu] = useState(false);
-  const navigate = useNavigate();
+  const [fetchedData, setFetchData] = useState<ItemsInterface[]>([]);
+
+  const {
+    data: itemsData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["itemsData"],
+    queryFn: () => getItems(),
+  });
+
+  const { mutateAsync: placeOrderMutation } = useMutation({
+    mutationFn: placeOrder,
+  });
+
+  useEffect(() => {
+    console.log("Running now");
+    setFetchData(itemsData ?? []);
+  }, [itemsData]);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) return "An error has occurred: " + (error as any)?.message;
   return (
     <div>
-      <br></br>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <Button
-          onClick={() => setShowMenu((prevState) => !prevState)}
-          style={{ textAlign: "end" }}
-        >
-          Menu
-        </Button>
-        <Button
-          onClick={() => navigate("items")}
-          style={{ textAlign: "end" }}
-          variant="warning"
-        >
-          Items
-        </Button>
-        <Button
-          variant="dark"
-          onClick={() => navigate("orders")}
-          style={{ textAlign: "end" }}
-        >
-          Orders
-        </Button>
-      </div>
-      {showMenu && (
-        <>
-          <br />
-          <AddItem />
-        </>
-      )}
-      <br />
-      <BillerItems />
+      <BillerItems
+        fetchedData={fetchedData}
+        setFetchData={setFetchData}
+        placeOrderMutation={placeOrderMutation}
+      />
     </div>
   );
 }

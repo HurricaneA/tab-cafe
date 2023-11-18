@@ -16,14 +16,35 @@ export interface OrdersInterface {
   total: number;
 }
 
+export interface OrderToPlaceInterface {
+  id: number;
+  name: string;
+  quantity: number;
+  unitPrice: number;
+}
+
 export interface GetOrdersInterface {
   id: number;
-  orders: {
-    name: string;
-    quantity: string;
-    unitPrice: string;
-  }[];
+  orders: Order[];
   isCompleted: boolean;
+  randomId: string;
+  receiptLink?: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface Order {
+  name: string;
+  quantity: number;
+  unitPrice: number;
+}
+
+export interface InvoiceInterface {
+  id: string;
+  invoice_no: string;
+  balance: string;
+  company: string;
+  address: string;
+  items: Order[];
+  transDate: string;
 }
