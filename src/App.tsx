@@ -4,7 +4,7 @@ import "./App.css";
 import Layout from "./components/layout";
 import { NavigationBar } from "./components/navbar/NavigationBar";
 import { Stats } from "./pages/Stats";
-import { Home } from "@mui/icons-material";
+import { Home } from "./pages/Home";
 import { Items } from "./pages/Items";
 import { Orders } from "./pages/Orders";
 

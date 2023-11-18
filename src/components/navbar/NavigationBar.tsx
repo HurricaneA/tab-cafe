@@ -3,7 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 export const NavigationBar = () => {
   return (
-    <Navbar className="bg-body-tertiary">
+    <Navbar bg="dark" data-bs-theme="dark" className="bg-body-tertiary">
       <Container>
         <LinkContainer to={"/"}>
           <Navbar.Brand>Tab Cafe</Navbar.Brand>

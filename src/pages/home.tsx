@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "react-query";
-import { getItems, placeOrder } from "../api";
+import { useMutation } from "react-query";
+import { placeOrder } from "../api";
+import { useItems } from "../api/queries";
 import BillerItems from "../components/biller/BillerItems";
 import { ItemsInterface } from "../interfaces";
-import { useItems } from "../api/queries";
 
 export const Home = () => {
   const [fetchedData, setFetchData] = useState<ItemsInterface[]>([]);

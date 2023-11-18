@@ -79,7 +79,7 @@ export default function BillerItems({
   }, [fetchedData]);
 
   return (
-    <>
+    <div className="my-2">
       <Button
         onClick={() => setShowMenu((prevState) => !prevState)}
         style={{ textAlign: "end" }}
@@ -87,13 +87,14 @@ export default function BillerItems({
         Add New Item
       </Button>
       {showMenu && (
-        <>
+        <div>
+          <br />
           <br />
           <AddItem />
-        </>
+        </div>
       )}
 
-      <div className="my-5">
+      <div className="my-3">
         <ListItemByType handleChange={handleChange} items={specials} />
         <ListItemByType handleChange={handleChange} items={snacks} />
         <ListItemByType handleChange={handleChange} items={beverages} />
@@ -104,7 +105,11 @@ export default function BillerItems({
             {order.map((item, index) => (
               <div
                 key={index}
-                style={{ display: "flex", justifyContent: "space-between" }}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
               >
                 <p key={index}>{item.description}</p>
                 <h5>{item.total}LKR</h5>
@@ -113,7 +118,12 @@ export default function BillerItems({
           </>
         )}
 
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <Button
             type="button"
             variant="secondary"
@@ -136,6 +146,7 @@ export default function BillerItems({
               try {
                 await placeOrderMutation(order);
                 setOrder([]);
+                resetOrder();
               } catch (error) {
                 console.log(error);
               }
@@ -152,6 +163,6 @@ export default function BillerItems({
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
