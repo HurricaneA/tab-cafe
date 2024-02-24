@@ -3,6 +3,7 @@ import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { ItemsInterface } from "../../interfaces";
+import { sortBy } from "lodash";
 export const ListItemByType = ({
   items,
   handleChange,
@@ -34,7 +35,7 @@ export const ListItemByType = ({
 
       {!hideList && (
         <>
-          {items?.map((item) => (
+          {sortBy(items, "name").map((item) => (
             <div className="row" key={item.id}>
               <div className="col-4">
                 <p>
